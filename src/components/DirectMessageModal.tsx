@@ -25,20 +25,11 @@ export const DirectMessageModal: React.FC<DirectMessageModalProps> = ({
     '¿Podrían agendar una llamada con un especialista?'
   ];
 
-  const handleSendWhatsApp = () => {
-    const text = message.trim() || '¡Hola, equipo de NumEvox! Visité su página web y busco asesoría.';
-    const encoded = encodeURIComponent(text);
-    window.open(`https://wa.me/52${phone}?text=${encoded}`, '_blank');
-    onClose();
-  };
+  const defaultMessage = '¡Hola, equipo de NumEvox! Visité su página web y busco asesoría.';
+  const currentMessage = message.trim() || defaultMessage;
 
-  const handleSendEmail = () => {
-    const text = message.trim() || '¡Hola, equipo de NumEvox! Visité su página web y busco asesoría.';
-    const encodedBody = encodeURIComponent(text);
-    const encodedSubject = encodeURIComponent('Consulta sobre NumEvox Finanzas y Talento');
-    window.open(`mailto:${email}?subject=${encodedSubject}&body=${encodedBody}`, '_blank');
-    onClose();
-  };
+  const whatsappUrl = `https://api.whatsapp.com/send?phone=52${phone}&text=${encodeURIComponent(currentMessage)}`;
+  const emailUrl = `mailto:${email}?subject=${encodeURIComponent('Consulta sobre NumEvox Finanzas y Talento')}&body=${encodeURIComponent(currentMessage)}`;
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-fade-in-up">
@@ -95,23 +86,27 @@ export const DirectMessageModal: React.FC<DirectMessageModalProps> = ({
 
         {/* Send Action Buttons */}
         <div className="grid grid-cols-2 gap-3 pt-2">
-          <button
-            onClick={handleSendWhatsApp}
-            className="w-full py-3 px-4 bg-[#25D366] hover:bg-[#20bd5a] text-black font-bold text-sm rounded-xl flex items-center justify-center gap-2 transition-transform active:scale-95 shadow-md"
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onClose}
+            className="w-full py-3 px-4 bg-[#25D366] hover:bg-[#20bd5a] text-black font-bold text-sm rounded-xl flex items-center justify-center gap-2 transition-transform active:scale-95 shadow-md text-center"
           >
             <svg className="w-5 h-5 fill-current text-black" viewBox="0 0 24 24">
               <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.964 9.964 0 001.333 4.993L2 22l5.233-1.237a9.982 9.982 0 004.779 1.221h.005c5.505 0 9.988-4.478 9.989-9.984 0-2.669-1.038-5.176-2.925-7.062A9.925 9.925 0 0012.012 2zm5.835 14.125c-.247.692-1.228 1.267-1.986 1.433-.518.113-1.196.204-3.473-.736-2.915-1.203-4.793-4.175-4.938-4.368-.145-.193-1.182-1.572-1.182-2.999 0-1.427.747-2.129 1.012-2.418.266-.289.578-.362.771-.362.193 0 .386.002.554.01.18.008.423-.068.662.505.247.59.843 2.06.916 2.205.072.145.12.313.024.506-.096.193-.145.313-.289.482-.145.169-.305.378-.435.508-.145.145-.296.303-.127.592.169.289.75 1.238 1.609 2.003 1.106.985 2.039 1.29 2.328 1.435.289.145.458.12.627-.072.169-.193.723-.843.916-1.132.193-.289.386-.241.651-.145.265.096 1.687.795 1.976.94.289.145.482.217.554.337.072.12.072.699-.175 1.391z" />
             </svg>
             <span>WhatsApp</span>
-          </button>
+          </a>
 
-          <button
-            onClick={handleSendEmail}
-            className="w-full py-3 px-4 bg-[#E11D48] hover:bg-[#be123c] text-white font-bold text-sm rounded-xl flex items-center justify-center gap-2 transition-transform active:scale-95 shadow-md"
+          <a
+            href={emailUrl}
+            onClick={onClose}
+            className="w-full py-3 px-4 bg-[#E11D48] hover:bg-[#be123c] text-white font-bold text-sm rounded-xl flex items-center justify-center gap-2 transition-transform active:scale-95 shadow-md text-center"
           >
             <span className="material-symbols-outlined text-xl">mail</span>
             <span>Correo</span>
-          </button>
+          </a>
         </div>
       </div>
     </div>
