@@ -38,7 +38,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, cardDat
 
   const shareWhatsApp = () => {
     const text = encodeURIComponent(`Mira la tarjeta digital de ${cardData.title}: ${currentUrl}`);
-    window.open(`https://wa.me/?text=${text}`, '_blank');
+    window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank', 'noopener,noreferrer');
   };
 
   return (

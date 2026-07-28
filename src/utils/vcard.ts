@@ -4,15 +4,15 @@ export function downloadVCard(data: CardData) {
   const vCardContent = [
     'BEGIN:VCARD',
     'VERSION:3.0',
-    `N:Simplifik;Aura;;;`,
+    `N:Numevox;Finanzas y Talento;;;`,
     `FN:${data.title}`,
-    `ORG:Simplifik Aromas y Difusores`,
+    `ORG:${data.title} ${data.subtitle}`,
     `TITLE:${data.subtitle}`,
     `TEL;TYPE=CELL,VOICE:${data.phone}`,
     `EMAIL;TYPE=INTERNET,PREF:${data.email}`,
     `URL:${data.website}`,
-    `ADR;TYPE=WORK:;;Blvrd. Interlomas 14;Bosque de las Palmas;;;México`,
-    `NOTE:${data.tagline} - ${data.description}`,
+    `ADR;TYPE=WORK:;;${data.address};;;;`,
+    `NOTE:${data.description}`,
     'END:VCARD'
   ].join('\r\n');
 
