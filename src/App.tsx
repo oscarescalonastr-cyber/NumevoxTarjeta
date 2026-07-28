@@ -3,11 +3,9 @@ import { initialCardData } from './data/cardData';
 import { HeroSection } from './components/HeroSection';
 import { SocialGrid } from './components/SocialGrid';
 import { ContactInfoSection } from './components/ContactInfoSection';
-import { QRCodeSection } from './components/QRCodeSection';
 import { DirectMessageModal } from './components/DirectMessageModal';
 import { ShareModal } from './components/ShareModal';
 import { MapModal } from './components/MapModal';
-import { QRModal } from './components/QRModal';
 import { BottomNav } from './components/BottomNav';
 import { downloadVCard } from './utils/vcard';
 
@@ -18,7 +16,6 @@ export default function App() {
   const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isMapModalOpen, setIsMapModalOpen] = useState(false);
-  const [isQRModalOpen, setIsQRModalOpen] = useState(false);
 
   const handleSaveContact = () => {
     downloadVCard(cardData);
@@ -43,12 +40,6 @@ export default function App() {
           cardData={cardData}
           onOpenMapModal={() => setIsMapModalOpen(true)}
         />
-
-        {/* Footer QR Card & Branding */}
-        <QRCodeSection
-          cardData={cardData}
-          onOpenQRModal={() => setIsQRModalOpen(true)}
-        />
       </main>
 
       {/* Fixed Bottom Navigation for Mobile */}
@@ -56,7 +47,6 @@ export default function App() {
         onOpenShareModal={() => setIsShareModalOpen(true)}
         onSaveContact={handleSaveContact}
         onOpenMapModal={() => setIsMapModalOpen(true)}
-        onOpenQRModal={() => setIsQRModalOpen(true)}
       />
 
       {/* Modals */}
@@ -78,14 +68,9 @@ export default function App() {
         onClose={() => setIsMapModalOpen(false)}
         address={cardData.address}
       />
-
-      <QRModal
-        isOpen={isQRModalOpen}
-        onClose={() => setIsQRModalOpen(false)}
-        cardData={cardData}
-      />
     </div>
   );
 }
+
 
 

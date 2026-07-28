@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 interface MapModalProps {
   isOpen: boolean;
@@ -7,10 +7,32 @@ interface MapModalProps {
 }
 
 export const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose, address }) => {
+  const [showCopied, setShowCopied] = useState(false);
+
   if (!isOpen) return null;
 
-  const encodedAddress = encodeURIComponent(address);
-  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+  const mapsUrl = "https://maps.app.goo.gl/XbJdni3iXhi7hBAx9";
+
+  const handleCopyAddress = () => {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(address).catch(() => {});
+    } else {
+      try {
+        const textArea = document.createElement('textarea');
+        textArea.value = address;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      } catch (err) {
+        // ignore fallback errors
+      }
+    }
+    setShowCopied(true);
+    setTimeout(() => {
+      setShowCopied(false);
+    }, 3000);
+  };
 
   return (
     <div
@@ -18,7 +40,7 @@ export const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose, address }) 
       onClick={onClose}
     >
       <div
-        className="w-full max-w-sm bg-[#1c1b1b] border border-[#4c4546] rounded-2xl p-6 shadow-2xl space-y-4 text-white relative"
+        className="w-full max-w-sm bg-[#1c1b1b] border border-[#4c4546] rounded-2xl p-6 shadow-2xl space-y-5 text-white relative"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -31,36 +53,50 @@ export const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose, address }) 
         <div className="flex items-center gap-2 border-b border-[#2a2a2a] pb-3">
           <span className="material-symbols-outlined text-[#E11D48] text-2xl">location_on</span>
           <div>
-            <h3 className="font-bold text-lg text-white">Ubicación y Sucursal</h3>
+            <h3 className="font-bold text-lg text-white">Ubicación</h3>
             <p className="text-xs text-gray-400">NumEvox</p>
           </div>
         </div>
 
-        <div className="p-3 bg-black/60 rounded-xl border border-[#4c4546] space-y-2">
-          <p className="text-sm text-gray-200 font-medium">{address}</p>
-          <p className="text-xs text-gray-400">Horario de atención: Lun - Vie 09:00 - 18:00 hrs</p>
+        {/* Copy confirmation toast */}
+        {showCopied && (
+          <div className="px-3 py-2 bg-[#25D366] text-black font-semibold text-xs rounded-xl flex items-center justify-center gap-2 animate-fade-in-up">
+            <span className="material-symbols-outlined text-sm">check_circle</span>
+            <span>¡Dirección copiada al portapapeles!</span>
+          </div>
+        )}
+
+        {/* Action Buttons: 1) Cómo llegar, 2) Dirección completa */}
+        <div className="space-y-3 pt-1">
+          {/* Button 1: Cómo llegar */}
+          <a
+            href={mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full py-3.5 bg-[#E11D48] hover:bg-[#be123c] text-white font-bold text-sm rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg text-center"
+          >
+            <span className="material-symbols-outlined text-xl">directions</span>
+            <span>Cómo llegar</span>
+          </a>
+
+          {/* Button 2: Dirección completa */}
+          <button
+            onClick={handleCopyAddress}
+            className="w-full py-3.5 bg-[#2a2a2a] hover:bg-[#333333] border border-[#4c4546] text-white font-bold text-sm rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95 shadow-md text-center group"
+          >
+            <span className="material-symbols-outlined text-xl text-[#E11D48] group-hover:scale-110 transition-transform">
+              location_on
+            </span>
+            <span>Dirección completa</span>
+          </button>
         </div>
 
-        {/* Map Preview Box */}
-        <div className="w-full h-44 bg-[#2a2a2a] rounded-xl overflow-hidden border border-[#4c4546] relative flex flex-col items-center justify-center p-4 text-center group">
-          <div className="absolute inset-0 bg-[radial-gradient(#4c4546_1px,transparent_1px)] [background-size:16px_16px] opacity-40"></div>
-          <span className="material-symbols-outlined text-4xl text-[#E11D48] mb-1 group-hover:scale-110 transition-transform">
-            distance
-          </span>
-          <p className="text-xs text-white font-semibold relative z-10">{address}</p>
-          <p className="text-[11px] text-gray-400 relative z-10 mt-1">Haz clic abajo para abrir en Google Maps</p>
+        {/* Address text box */}
+        <div className="p-3 bg-black/40 rounded-xl border border-[#2a2a2a]">
+          <p className="text-xs text-gray-300 font-medium text-center leading-relaxed">{address}</p>
         </div>
-
-        <a
-          href={mapsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full py-3 bg-[#E11D48] hover:bg-[#be123c] text-white font-bold text-sm rounded-xl flex items-center justify-center gap-2 transition-transform active:scale-95 shadow-lg block text-center"
-        >
-          <span className="material-symbols-outlined text-lg">directions</span>
-          <span>Cómo llegar en Google Maps</span>
-        </a>
       </div>
     </div>
   );
 };
+

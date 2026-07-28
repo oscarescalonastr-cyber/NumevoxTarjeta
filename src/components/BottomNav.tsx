@@ -4,14 +4,12 @@ interface BottomNavProps {
   onOpenShareModal: () => void;
   onSaveContact: () => void;
   onOpenMapModal: () => void;
-  onOpenQRModal: () => void;
 }
 
 export const BottomNav: React.FC<BottomNavProps> = ({
   onOpenShareModal,
   onSaveContact,
   onOpenMapModal,
-  onOpenQRModal,
 }) => {
   return (
     <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-5 py-2 bg-[#1c1b1b]/95 backdrop-blur-md border-t border-[#4c4546] shadow-lg rounded-t-xl md:hidden">
@@ -47,17 +45,8 @@ export const BottomNav: React.FC<BottomNavProps> = ({
           location_on
         </span>
       </button>
-
-      <button
-        onClick={onOpenQRModal}
-        className="flex flex-col items-center hover:bg-[#353535] transition-colors text-[#c6c6c7] p-2 group rounded-xl cursor-pointer"
-        title="Código QR"
-      >
-        <span className="material-symbols-outlined text-2xl group-hover:scale-90 group-hover:text-[#E11D48] transition-all">
-          qr_code_2
-        </span>
-      </button>
     </nav>
   );
 };
+
 
