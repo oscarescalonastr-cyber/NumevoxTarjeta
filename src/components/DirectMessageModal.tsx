@@ -19,17 +19,17 @@ export const DirectMessageModal: React.FC<DirectMessageModalProps> = ({
   if (!isOpen) return null;
 
   const quickTemplates = [
-    '¡Hola, equipo de NumEvox! Visité su página web y busco asesoría.',
+    '¡Hola, equipo de Numevox! Visité su página web y busco asesoría.',
     'Quisiera cotizar asesoría en finanzas y cumplimiento fiscal.',
     'Me gustaría conocer más sobre sus servicios para Pymes.',
     '¿Podrían agendar una llamada con un especialista?'
   ];
 
-  const defaultMessage = '¡Hola, equipo de NumEvox! Visité su página web y busco asesoría.';
+  const defaultMessage = '¡Hola, equipo de Numevox! Visité su página web y busco asesoría.';
   const currentMessage = message.trim() || defaultMessage;
 
   const whatsappUrl = `https://api.whatsapp.com/send?phone=52${phone}&text=${encodeURIComponent(currentMessage)}`;
-  const emailUrl = `mailto:${email}?subject=${encodeURIComponent('Consulta sobre NumEvox Finanzas y Talento')}&body=${encodeURIComponent(currentMessage)}`;
+  const emailUrl = `mailto:${email}?subject=${encodeURIComponent('Consulta sobre Numevox Finanzas y Talento')}&body=${encodeURIComponent(currentMessage)}`;
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-fade-in-up">

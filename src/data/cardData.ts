@@ -63,7 +63,7 @@ export const socialLinks: SocialLink[] = [
     id: "whatsapp",
     name: "WhatsApp Directo",
     iconName: "chat",
-    url: "https://api.whatsapp.com/send?phone=523315205180&text=" + encodeURIComponent("¡Hola, equipo de NumEvox! 👋 Visité su página web y busco asesoría"),
+    url: "https://api.whatsapp.com/send?phone=523315205180&text=" + encodeURIComponent("¡Hola, equipo de Numevox! 👋 Visité su página web y busco asesoría"),
     type: "whatsapp",
   },
   {

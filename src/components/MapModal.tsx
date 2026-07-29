@@ -54,7 +54,7 @@ export const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose, address }) 
           <span className="material-symbols-outlined text-[#E11D48] text-2xl">location_on</span>
           <div>
             <h3 className="font-bold text-lg text-white">Ubicación</h3>
-            <p className="text-xs text-gray-400">NumEvox</p>
+            <p className="text-xs text-gray-400">Numevox</p>
           </div>
         </div>
 
